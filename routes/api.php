@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SatisfaccionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('satisfaccion', [SatisfaccionController::class, 'index']);
+Route::post('satisfaccion', [SatisfaccionController::class, 'store']);
+Route::post('login', [UserController::class, 'login'])->name('login');
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('satisfaccion', [SatisfaccionController::class, 'index']);
+    Route::get('logout', [UserController::class, 'logout']);
 });
