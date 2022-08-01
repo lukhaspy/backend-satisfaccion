@@ -13,6 +13,23 @@ class SatisfaccionController extends Controller
         return Satisfaccion::all();
     }
 
+    public function getGrafico()
+    {
+        $grafico = Satisfaccion::selectRaw('count(id) as cantidad, calificacion')->groupBy('calificacion')->get();
+
+        $resultado = [
+            ['name' => '1 (Pesima)', 'value' => 0],
+            ['name' => '2 (Regular)', 'value' => 0],
+            ['name' => '3 (Aceptable)', 'value' => 0],
+            ['name' => '4 (Buena)', 'value' => 0],
+            ['name' => '5 (Excelente)', 'value' => 0],
+        ];
+        foreach ($grafico as $valor) {
+            $resultado[$valor->calificacion - 1]['value'] = $valor->cantidad;
+        }
+
+        return response()->json($resultado);
+    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
