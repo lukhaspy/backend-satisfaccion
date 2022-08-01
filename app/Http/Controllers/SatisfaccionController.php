@@ -17,7 +17,7 @@ class SatisfaccionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:satisfaccion,email',
-            'nota' => 'required|integer|in:1,2,3,4,5',
+            'calificacion' => 'required|integer|in:1,2,3,4,5',
             'obs' => 'nullable|min:3',
         ]);
 
@@ -25,6 +25,7 @@ class SatisfaccionController extends Controller
             return response()->json($validator->getMessageBag(), 500);
         }
 
+        $request->merge(['fecha' => date('Y-m-d H:i:s')]);
         $satisfaccion = Satisfaccion::create($request->all());
 
         return response()->json($satisfaccion);

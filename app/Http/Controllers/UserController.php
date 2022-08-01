@@ -27,7 +27,7 @@ class UserController extends Controller
 
 
         if (!Hash::check(trim($request->password), $usuario->password)) {
-            return response()->json(['message' => 'Contraseña Inválida'], 500);
+            return response()->json(['errors' => ['Contraseña Inválida']], 500);
         }
 
         $usuario->tokens()->delete();

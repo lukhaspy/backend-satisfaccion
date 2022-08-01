@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('satisfaccion', [SatisfaccionController::class, 'index']);
 Route::post('satisfaccion', [SatisfaccionController::class, 'store']);
 Route::post('login', [UserController::class, 'login'])->name('login');
 Route::group(['middleware' => ['auth:sanctum']], function () {
